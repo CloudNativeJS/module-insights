@@ -1,0 +1,54 @@
+{
+  "name": "NodeVersion",
+  "plural": "NodeVersions",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "node_version": {
+      "type": "string",
+      "required": true
+    },
+    "lts_version_id": {
+      "type": "number"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "LTSVersion": {
+      "type": "belongsTo",
+      "model": "LTSVersion",
+      "foreignKey": "lts_version_id",
+      "required": true
+    },
+    "ModuleVersionTest": {
+      "type": "hasMany",
+      "model": "ModuleVersionTest",
+      "foreignKey": "node_version_id"
+    }
+  },
+  "acls": [
+    {
+      "accessType": "WRITE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    },
+    {
+      "accessType": "WRITE",
+      "principalType": "ROLE",
+      "principalId": "admin",
+      "permission": "ALLOW"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "test",
+      "permission": "ALLOW",
+      "property": "create"
+    }
+  ],
+  "methods": {}
+}

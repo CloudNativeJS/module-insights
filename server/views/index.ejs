@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+
+<!--
+  ***************************************************************************
+  *
+  * (C) Copyright IBM Corp. 2018
+  *
+  *  This program and the accompanying materials are made available
+  *  under the terms of the Apache License v2.0 which accompanies
+  *  this distribution.
+  *
+  *      The Apache License v2.0 is available at
+  *      http://www.opensource.org/licenses/apache2.0.php
+  *
+  * Contributors:
+  *   Multiple authors (IBM Corp.) - initial implementation and documentation
+  ***************************************************************************
+-->
+
+<html>
+
+<% include includes/header.ejs %>
+
+<body>
+  <% let subtitle = ''%>
+  <% let logoSize = '150'; %>
+  <% let links = true; %>
+  <% let breadcrumb = [] %>
+  <% include includes/title.ejs %>
+  <div class="ibm-center ibm-padding-top-r1 ibm-padding-bottom-r0 dynamic">
+      <form class="ibm-row-form ibm-row-form--line">
+          <label class="ibm-row-field-label" for="distribution">Platform:&nbsp;</label>
+          <select name="platformString" onchange="document.location.href=this.value">
+              <% for (let plat of validPlatformsStr) { %>
+                <% let platformQueryString = plat.replace(/\(/, '').replace(/\)/, '').split(' '); %>
+                <% if (platformQueryString[0] == distro && platformQueryString[1] == arch) { %>
+                  <option selected value="/?distro=<%= platformQueryString[0] %>&arch=<%= platformQueryString[1] %>"><%= plat %></option>
+                <% } else { %>
+                  <option value="/?distro=<%= platformQueryString[0] %>&arch=<%= platformQueryString[1] %>"><%= plat %></option>
+                <% } %>
+              <% } %>
+          </select>
+      </form>
+  </div>
+
+      <div class="ibm-padding-top-r1 ibm-padding-bottom-r3 ibm-padding-content z-2">
+        <table id="test1table" data-widget="datatable" data-scrollaxis="x" data-col-reorder="true" data-info="true" data-ordering="true" data-searching="true" class="ibm-data-table ibm-altrows">
+            <thead>
+                <tr>
+                  <th colspan="3"></th>
+                  <th colspan=<%= lts_versions.length %> scope="colgroup" class="ibm-textcolor-default color-primary">Recommended Versions</th>
+                  <th colspan="4" scope="colgroup" class="ibm-textcolor-default color-secondary">Latest Version Status</th>
+                </tr>
+                <th scope="col">Name</th>
+                <th scope="col">Commercial Support</th>
+                <th scope="col">Stability</th>
+                <% for (let lts of lts_versions) { %>
+                  <th scope="col">Node <%= lts.lts_version %> (<%= lts.latestNodeVersion.node_version %>)</th>
+                <% } %>
+                <th scope="col">Latest Version</th>
+                <th scope="col">License</th>
+                <th scope="col">Sublicenses</th>
+                <th scope="col">Code Coverage</th>
+            </thead>
+
+            <% for (let i = 0; i < modules.length; i++) { %>
+            <tr>
+                <th scope="row">
+                  <a href='/module/<%= modules[i].name.replace(/\//, `%2F`) %>'><%= modules[i].name %></a>
+                </th>
+                <th scope="row">
+                  <% if (modules[i].commercial_support) { %>
+                     <% for (let company = 0; company < modules[i].commercial_support.length; company++) { %>
+                      <a target="_blank" class="notextdecoration" rel="noopener noreferrer" href='<%= commercial_support[modules[i].commercial_support[company]].url %>'">
+                        <span class="<%= commercial_support[modules[i].commercial_support[company]].css_class %>">
+                          <%= modules[i].commercial_support[company] %>
+                        </span>
+                      </a>
+                    <% } %>
+                  <%  } %>
+                </th>
+                <% if (modules[i].stability == "LTS Adopted") { %>
+                <td class="ibm-bgcolor-green-10">
+                  <a target="_blank" class="notextdecoration" rel="noopener noreferrer" href='https://github.com/CloudNativeJS/ModuleLTS/blob/master/README.md'>
+                    <%= modules[i].stability %>
+                  </a>
+                </td>
+                <% } else { %>
+                <td>
+                    <!-- TOOLTIP_BEGIN -->
+                    <span data-widget="tooltip" data-contentid="tt-1">Not Available</span>
+                    <div id="tt-1" class="ibm-tooltip-content">
+                        <p>A module's stability may show as 'Not Available' if: we are unable to confirm its LTS Policy.</p>
+                    </div>
+                    <!-- TOOLTIP_END -->
+                </td>
+                <% } %>
+                <% for (let outerLTS of lts_versions) { %>
+                  <% let recFound = false; %>
+                  <% for (let lts of modules[i].ModuleRecommendedLTS) { %>
+                    <% if (outerLTS.id == lts.lts_version_id) { %>
+                      <% recFound = true; %>
+                      <% if (lts.testResult) { %>
+                        <% if (lts.testResult.passed) { %>
+                        <td class="ibm-padding-bottom-0 ibm-padding-top-0 ibm-bgcolor-green-10">
+                        <% } else if (lts.testResult.passed === undefined) { %>
+                        <td class="ibm-padding-bottom-0 ibm-padding-top-0">
+                        <% } else { %>
+                        <td class="ibm-padding-bottom-0 ibm-padding-top-0 ibm-bgcolor-red-10">
+                        <% } %>
+                        <a href="/module/<%= modules[i].name.replace(/\//, `%2F`) %>/module_version/<%= lts.testResult.ModuleVersion.module_version %>">
+                          <%= lts.recommended_version %> (<%= lts.testResult.ModuleVersion.module_version %>)
+                        </a>
+                      </td>
+                      <% } else { %>
+                        <td>
+                            <!-- TOOLTIP_BEGIN -->
+                            <span data-widget="tooltip" data-contentid="tt-2">Not Available</span>
+                            <div id="tt-2" class="ibm-tooltip-content">
+                                <p>A module's test results may show as 'Not Available' if: a new Node.js version has recently been released.</p>
+                            </div>
+                            <!-- TOOLTIP_END -->
+                        </td>
+                      <% } %>
+                    <% } %>
+                  <% } %>
+                  <% if (recFound == false) { %>
+                    <td>
+                      <!-- TOOLTIP_BEGIN -->
+                      <span data-widget="tooltip" data-contentid="tt-3">Not Supported</span>
+                      <div id="tt-3" class="ibm-tooltip-content">
+                          <p>The owner has declared that this module is not compatible with this Node.js Version.</p>
+                      </div>
+                      <!-- TOOLTIP_END -->
+                    </td>
+                  <% } %> 
+                <% } %>
+                <% if (modules[i].ModuleRecommendedLTS && modules[i].ModuleRecommendedLTS[1] && modules[i].ModuleRecommendedLTS[1].testResult) { %>
+
+                <% if (modules[i].ModuleRecommendedLTS[1].testResult.passed) { %>
+                <td class="ibm-bgcolor-green-10">
+                <% } else if (modules[i].ModuleRecommendedLTS[1].testResult.passed === undefined) { %>
+                <td>
+                <% } else { %>
+                <td class="ibm-bgcolor-red-10">
+                <% } %>
+                <a href="/module/<%= modules[i].name.replace(/\//, `%2F`) %>/module_version/<%=  modules[i].latestModuleVersion.module_version %>">
+                  <%= modules[i].latestModuleVersion.module_version %>
+                </a>
+                </td>
+                <td><%= modules[i].latestModuleVersion.license %></td>
+                <td><%= modules[i].latestModuleVersion.deps_licenses_count %></td>
+                <% if (!modules[i].ModuleRecommendedLTS[1].testResult.code_coverage){ %>
+                <td>
+                <% } else if (modules[i].ModuleRecommendedLTS[1].testResult.code_coverage >= 90){ %>
+                <td class="ibm-bgcolor-green-10">
+                <% } else if (modules[i].ModuleRecommendedLTS[1].testResult.code_coverage >= 50){ %>
+                <td class="ibm-bgcolor-yellow-10">
+                <% } else if (modules[i].ModuleRecommendedLTS[1].testResult.code_coverage < 50){ %>
+                <td class="ibm-bgcolor-red-10">
+                <% } %>
+                <% if (modules[i].ModuleRecommendedLTS[1].testResult.code_coverage === 0) { %>
+                  <!-- TOOLTIP_BEGIN -->
+                  <span data-widget="tooltip" data-contentid="tt-3">Not Available</span>
+                  <div id="tt-3" class="ibm-tooltip-content">
+                    <p>A module's code coverage may show as 'Not Available' if: we are unable to find any tests or we are unable to execute via `nyc npm test`, using `citgm` as a test runner.</p>
+                  </div>
+                  <!-- TOOLTIP_END -->
+                <% } else { %>
+                  <%= modules[i].ModuleRecommendedLTS[1].testResult.code_coverage %>
+                <% } %>
+                </td>
+                <% } else { %>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <% } %>
+              </tr>
+            <% } %>
+        </table>
+    </div>
+  <% include includes/footer.ejs %>
+</body>
+
+</html>

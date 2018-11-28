@@ -1,0 +1,59 @@
+{
+  "name": "Module",
+  "plural": "Modules",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "tags": {
+      "type": []
+    },
+    "stability": {
+      "type": "string"
+    },
+    "commercial_support": {
+      "type": []
+    }
+  },
+  "validations": [],
+  "relations": {
+    "ModuleRecommendedLTS": {
+      "type": "hasMany",
+      "model": "ModuleRecommendedLTS",
+      "foreignKey": "module_id"
+    },
+    "ModuleVersion": {
+      "type": "hasMany",
+      "model": "ModuleVersion",
+      "foreignKey": "module_id"
+    }
+  },
+  "acls": [
+    {
+      "accessType": "WRITE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    },
+    {
+      "accessType": "WRITE",
+      "principalType": "ROLE",
+      "principalId": "admin",
+      "permission": "ALLOW"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "test",
+      "permission": "ALLOW",
+      "property": "create"
+    }
+  ],
+  "methods": {}
+}

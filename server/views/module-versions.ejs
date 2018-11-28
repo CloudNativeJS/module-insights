@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+
+<!--
+  ***************************************************************************
+  *
+  * (C) Copyright IBM Corp. 2018
+  *
+  *  This program and the accompanying materials are made available
+  *  under the terms of the Apache License v2.0 which accompanies
+  *  this distribution.
+  *
+  *      The Apache License v2.0 is available at
+  *      http://www.opensource.org/licenses/apache2.0.php
+  *
+  * Contributors:
+  *   Multiple authors (IBM Corp.) - initial implementation and documentation
+  ***************************************************************************
+-->
+
+<html>
+
+<% include includes/header.ejs %>
+
+<body>
+  <% let logoSize = '150'; %>
+  <% let breadcrumb = [{page: 'Home', link: '/'}, {page: module_name, link: ''}]; %>
+  <% include includes/title.ejs %>
+    <div class="ibm-padding-top-r1 ibm-padding-bottom-r3 ibm-padding-content">
+      <table id="test1table" data-widget="datatable" data-col-reorder="true" data-info="true" data-ordering="true" data-searching="true" class="ibm-data-table ibm-altrows">
+        <col>
+        <colgroup span="2"></colgroup>
+        <colgroup span="2"></colgroup>
+        <thead>
+            <tr>
+              <th colspan="4" scope="colgroup" class="ibm-textcolor-default color-primary">Module Versions:</th>
+            </tr>
+            <th scope="col">Version</th>
+            <th scope="col">Date Scanned</th>
+            <th scope="col">License</th>
+            <th scope="col">Sublicenses</th>
+        </thead>
+   
+        <tbody>
+          <% for (let i = 0; i < modules.length; i++) { %>
+          <tr>
+            <td>
+              <a href='/module/<%= module_name.replace(/\//, `%2F`) %>/module_version/<%= modules[i].module_version %>'>
+                <%= modules[i].module_version %>
+              </a>
+            </td>
+            <td><%= modules[i].date %></td>
+            <td><%= modules[i].license %></td>
+            <td><%= modules[i].deps_licenses %></td>
+          </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
+    <% include includes/footer.ejs %>
+</body>
+
+</html>

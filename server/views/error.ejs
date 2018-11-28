@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+
+<!--
+  ***************************************************************************
+  *
+  * (C) Copyright IBM Corp. 2018
+  *
+  *  This program and the accompanying materials are made available
+  *  under the terms of the Apache License v2.0 which accompanies
+  *  this distribution.
+  *
+  *      The Apache License v2.0 is available at
+  *      http://www.opensource.org/licenses/apache2.0.php
+  *
+  * Contributors:
+  *   Multiple authors (IBM Corp.) - initial implementation and documentation
+  ***************************************************************************
+-->
+
+<html>
+
+<% include includes/header.ejs %>
+  <head>
+    <title>Error - <%= error_code %></title>
+  </head>
+  <body>
+    <!-- TITLE_BEGIN -->
+    <div id="ibm-leadspace-head" class="ibm-alternate ibm-padding-top-1 ibm-background-green-10">
+      <div id="ibm-leadspace-body ibm-padding-bottom-0">
+        <div class="ibm-columns">
+          <div class="ibm-col-4-3 ibm-col-medium-6-4">
+            <h1 class="ibm-h2 ibm-medium ibm-textcolor-default ibm-padding-top-1 ibm-padding-bottom-0">Error - <%= error_code %></h1>
+            <div class="ibm-rule ibm-alternate-1 ibm-grey-60">
+              <hr>
+            </div>
+            <h4 class="ibm-h4 ibm-textcolor-default ibm-padding-top-1 ibm-padding-bottom-5">
+              Please try again later
+            </h4>
+            <% if (typeof links !== 'undefined') { %>
+            <p class="ibm-btn-row ibm-button-link ibm-padding-top-1">
+              <a target="_blank" rel="noopener noreferrer" href="https://developer.ibm.com/technologies/node-js/" class="ibm-btn-pri ibm-btn-green-30 ibm-external-link ibm-icon-after">Node.js@IBM Developer</a>
+              <a target="_blank" rel="noopener noreferrer" href="https://www.ibm.com/us-en/marketplace/support-for-runtimes" class="ibm-btn-pri ibm-btn-green-30 ibm-external-link ibm-icon-after">IBM Support</a>
+              <a target="_blank" rel="noopener noreferrer" href="https://www.cloudnativejs.io/modules-faq.html" class="ibm-btn-pri ibm-btn-green-30 ibm-external-link ibm-icon-after">Docs</a>
+            </p>
+            <% }; %>
+
+          </div>
+          <div class="ibm-col-6-1">
+            <img src="/public/images/module-curation-logo.png" aligh="left" height="240" width="240" alt="Module Insights logo">
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- TITLE_END -->
+  </body>
+</html>

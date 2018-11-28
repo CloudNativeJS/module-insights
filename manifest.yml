@@ -1,0 +1,7 @@
+---
+applications:
+- name: module-curation
+  memory: 256M
+  instances: 1
+services:
+ - module-curation-psql

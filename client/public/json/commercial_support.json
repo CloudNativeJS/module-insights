@@ -1,0 +1,10 @@
+{
+  "IBM": {
+   "url": "https://www.ibm.com/us-en/marketplace/support-for-runtimes",
+   "css_class": "tag-support-ibm"
+ },
+ "LunchBadger": {
+  "url": "https://www.lunchbadger.com/",
+  "css_class": "tag-support-lunchbadger"
+ }
+}

@@ -1,0 +1,32 @@
+language: node_js
+node_js: "8"
+sudo: false
+install:
+  - npm install
+script:
+  - npm run lint
+  - docker run -d postgres
+  - npm test
+services:
+  - docker
+deploy:
+  - provider: bluemixcloudfoundry
+    edge: true
+    username: apikey
+    password: $PLATFORM_API_KEY
+    organization: Module-Curation
+    space: MC-UK
+    manifest: manifest-staging.yml
+    region: eu-gb
+    on:
+      branch: master
+  - provider: bluemixcloudfoundry
+    edge: true
+    username: apikey
+    password: $PLATFORM_API_KEY
+    organization: Module-Curation
+    space: MC-UK
+    manifest: manifest.yml
+    region: eu-gb
+    on:
+      branch: release

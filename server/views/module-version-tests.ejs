@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+
+<!--
+  ***************************************************************************
+  *
+  * (C) Copyright IBM Corp. 2018
+  *
+  *  This program and the accompanying materials are made available
+  *  under the terms of the Apache License v2.0 which accompanies
+  *  this distribution.
+  *
+  *      The Apache License v2.0 is available at
+  *      http://www.opensource.org/licenses/apache2.0.php
+  *
+  * Contributors:
+  *   Multiple authors (IBM Corp.) - initial implementation and documentation
+  ***************************************************************************
+-->
+
+<html>
+
+<% include includes/header.ejs %>
+
+<body>
+  <% let logoSize = '150'; %>
+  <% let breadcrumb = [{page: 'Home', link: '/'}, {page: module_name, link: '/module/' + module_name.replace(/\//, `%2F`)}, {page: module_version, link: ''}]; %>
+  <% include includes/title.ejs %>
+  <!-- TABLE_BEGIN -->
+  <div class="ibm-padding-top-r1 ibm-padding-bottom-r3 ibm-padding-content">
+    <table id="test1table" data-widget="datatable" data-col-reorder="true" data-info="true" data-ordering="true"
+      data-searching="true" class="ibm-data-table ibm-altrows">
+      <thead>
+        <tr>
+          <th colspan="6" scope="colgroup" class="ibm-textcolor-default color-primary">Test Results:</th>
+        </tr>
+        <th scope="col">OS</th>
+        <th scope="col">ARCH</th>
+        <th scope="col">DISTRO</th>
+        <th scope="col">Node Version</th>
+        <th scope="col">Passed</th>
+        <th scope="col">Code Coverage</th>
+      </thead>
+      <% for (let i = 0; i < modules.length; i++) { %>
+      <tr>
+        <td>
+          <%= modules[i].os %>
+        </td>
+        <td>
+          <%= modules[i].arch %>
+        </td>
+        <td>
+          <%= modules[i].distro %>
+        </td>
+        <td>
+          <%= modules[i].node_version %>
+        </td>
+        <td class=<%=modules[i].passed ? "ibm-bgcolor-green-10" : "ibm-bgcolor-red-10" %> >
+          <%= modules[i].passed ? "✔" : "✘" %>
+          <% if(!modules[i].passed ){ %>
+          <a href="../../../logs/<%= encodeURIComponent(module_name) %>@<%= module_version %>-<%= modules[i].os %>-<%= modules[i].arch %>-<%= modules[i].node_version %>.txt"
+            target="_blank" rel="noopener noreferrer" style="text-align: center">View log</a>
+          <% } %>
+        </td>
+        <% if (!modules[i].code_coverage){ %>
+        <td>
+          <% } else if (modules[i].code_coverage >= 90){ %>
+        <td class="ibm-bgcolor-green-10">
+          <% } else if (modules[i].code_coverage >= 50){ %>
+        <td class="ibm-bgcolor-yellow-10">
+          <% } else if (modules[i].code_coverage < 50){ %>
+        <td class="ibm-bgcolor-red-10">
+          <% } %>
+          <% if (modules[i].code_coverage === 0) { %>
+          <span data-widget="tooltip" data-contentid="tt-1">Not Available</span>
+          <div id="tt-1" class="ibm-tooltip-content">
+            <p>
+              A module&apos;s code coverage may show as 'Not Available' if: we are unable to find any tests or we are
+              unable to execute via `nyc npm test`, using `citgm` as a test runner.
+            </p>
+          </div>
+          <% } else { %>
+          <%= modules[i].code_coverage %>
+          <% } %>
+        </td>
+      </tr>
+      <% } %>
+    </table>
+  </div>
+  <!-- TABLE_END -->
+  <% include includes/footer.ejs %>
+</body>
+
+</html>

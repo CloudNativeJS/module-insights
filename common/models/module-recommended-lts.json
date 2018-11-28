@@ -1,0 +1,58 @@
+{
+  "name": "ModuleRecommendedLTS",
+  "plural": "ModuleRecommendedLTSs",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "lts_version_id": {
+      "type": "number",
+      "required": true
+    },
+    "module_id": {
+      "type": "number",
+      "required": true
+    },
+    "recommended_version": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "Module": {
+      "type": "belongsTo",
+      "model": "Module",
+      "foreignKey": "module_id"
+    },
+    "LTSVersion": {
+      "type": "belongsTo",
+      "model": "LTSVersion",
+      "foreignKey": "lts_version_id"
+    }
+  },
+  "acls": [
+    {
+      "accessType": "WRITE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    },
+    {
+      "accessType": "WRITE",
+      "principalType": "ROLE",
+      "principalId": "admin",
+      "permission": "ALLOW"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "test",
+      "permission": "ALLOW",
+      "property": "create"
+    }
+  ],
+  "methods": {}
+}

@@ -1,0 +1,89 @@
+{
+  "name": "ModuleVersionTest",
+  "plural": "ModuleVersionTests",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "arch_id": {
+      "type": "number",
+      "required": true
+    },
+    "distro_id": {
+      "type": "number",
+      "required": true
+    },
+    "os_id": {
+      "type": "number",
+      "required": true
+    },
+    "node_version_id": {
+      "type": "number",
+      "required": true
+    },
+    "module_version_id": {
+      "type": "number",
+      "required": true
+    },
+    "code_coverage": {
+      "type": "number",
+      "required": true
+    },
+    "passed": {
+      "type": "boolean",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "Architecture": {
+      "type": "belongsTo",
+      "model": "Architecture",
+      "foreignKey": "arch_id"
+    },
+    "Distribution": {
+      "type": "belongsTo",
+      "model": "Distribution",
+      "foreignKey": "distro_id"
+    },
+    "OperatingSystem": {
+      "type": "belongsTo",
+      "model": "OperatingSystem",
+      "foreignKey": "os_id"
+    },
+    "NodeVersion": {
+      "type": "belongsTo",
+      "model": "NodeVersion",
+      "foreignKey": "node_version_id"
+    },
+    "ModuleVersion": {
+      "type": "belongsTo",
+      "model": "ModuleVersion",
+      "foreignKey": "module_version_id"
+    }
+  },
+  "acls": [
+    {
+      "accessType": "WRITE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    },
+    {
+      "accessType": "WRITE",
+      "principalType": "ROLE",
+      "principalId": "admin",
+      "permission": "ALLOW"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "test",
+      "permission": "ALLOW",
+      "property": "create"
+    }
+  ],
+  "methods": {}
+}

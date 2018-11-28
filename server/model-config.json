@@ -1,0 +1,96 @@
+{
+  "_meta": {
+    "sources": [
+      "loopback/common/models",
+      "loopback/server/models",
+      "../common/models",
+      "./models"
+    ],
+    "mixins": [
+      "loopback/common/mixins",
+      "loopback/server/mixins",
+      "../common/mixins",
+      "./mixins"
+    ]
+  },
+  "User": {
+    "dataSource": "PostgressqlDS",
+    "relations": {
+      "accessToken": {
+        "type": "hasMany",
+        "model": "AccessToken",
+        "foreignKey": "userId"
+      }
+    }
+  },
+  "AccessToken": {
+    "dataSource": "PostgressqlDS",
+    "public": false,
+    "relations": {
+      "user": {
+        "type": "belongsTo",
+        "model": "User",
+        "foreignKey": "userId"
+      }
+    }
+  },
+  "ACL": {
+    "dataSource": "PostgressqlDS",
+    "public": false
+  },
+  "RoleMapping": {
+    "dataSource": "PostgressqlDS",
+    "public": false,
+    "options": {
+      "strictObjectIDCoercion": true
+    }
+  },
+  "Role": {
+    "dataSource": "PostgressqlDS",
+    "public": false
+  },
+  "LTSVersion": {
+    "dataSource": "PostgressqlDS",
+    "public": true
+  },
+  "NodeVersion": {
+    "dataSource": "PostgressqlDS",
+    "public": true
+  },
+  "Architecture": {
+    "dataSource": "PostgressqlDS",
+    "public": true
+  },
+  "Distribution": {
+    "dataSource": "PostgressqlDS",
+    "public": true
+  },
+  "OperatingSystem": {
+    "dataSource": "PostgressqlDS",
+    "public": true
+  },
+  "ModuleVersionTest": {
+    "dataSource": "PostgressqlDS",
+    "public": true
+  },
+  "Module": {
+    "dataSource": "PostgressqlDS",
+    "public": true
+  },
+  "ModuleVersion": {
+    "dataSource": "PostgressqlDS",
+    "public": true
+  },
+  "ModuleRecommendedLTS": {
+    "dataSource": "PostgressqlDS",
+    "public": true
+  },
+  "ValidPlatform": {
+    "dataSource": "PostgressqlDS",
+    "public": true
+  },
+  "DepModuleVersion": {
+    "dataSource": "PostgressqlDS",
+    "public": true
+  }
+}

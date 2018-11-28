@@ -1,0 +1,94 @@
+{
+  "name": "ModuleVersion",
+  "plural": "ModuleVersions",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "module_id": {
+      "type": "number",
+      "required": true
+    },
+    "module_major_version": {
+      "type": "string"
+    },
+    "module_version": {
+      "type": "string",
+      "required": true
+    },
+    "license": {
+      "type": "string",
+      "required": true
+    },
+    "deps_ids": {
+      "type": "string"
+    },
+    "deps_licenses": {
+      "type": "string"
+    },
+    "deps_licenses_count": {
+      "type": "number"
+    },
+    "timestamp": {
+      "type": "string"
+    }
+  },
+  "validations": [],
+  "relations": {
+    "ModuleVersionTest": {
+      "type": "hasMany",
+      "model": "ModuleVersionTest",
+      "foreignKey": "module_version_id"
+    },
+    "Module": {
+      "type": "belongsTo",
+      "model": "Module",
+      "foreignKey": "module_id"
+    }
+  },
+  "acls": [
+    {
+      "accessType": "WRITE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY"
+    },
+    {
+      "accessType": "WRITE",
+      "principalType": "ROLE",
+      "principalId": "admin",
+      "permission": "ALLOW"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "test",
+      "permission": "ALLOW",
+      "property": "create"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY",
+      "property": "patchLicense"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "test",
+      "permission": "ALLOW",
+      "property": "patchLicense"
+    },
+    {
+      "accessType": "EXECUTE",
+      "principalType": "ROLE",
+      "principalId": "admin",
+      "permission": "ALLOW",
+      "property": "patchLicense"
+    }
+  ],
+  "methods": {}
+}

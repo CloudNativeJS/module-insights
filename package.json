@@ -1,0 +1,52 @@
+{
+  "name": "mc",
+  "version": "0.1.0",
+  "main": "server/server.js",
+  "engines": {
+    "node": ">=8"
+  },
+  "scripts": {
+    "lint": "eslint **/*.js",
+    "start": "export NODE_ENV=production && node .",
+    "start-dev": "export NODE_ENV=development && node .",
+    "test": "export NODE_ENV=test && npm run lint && npm run migrate-test-tables && mocha --exit --timeout 5000 2> /dev/null",
+    "test-travis": "export NODE_ENV=test && npm run migrate-test-tables && mocha --exit --timeout 5000 2> /dev/null",
+    "update-tables": "npm run update-prod-tables && npm run update-dev-tables",
+    "update-prod-tables": "export NODE_ENV=production && node server/update-tables",
+    "update-dev-tables": "export NODE_ENV=development && node server/update-tables",
+    "migrate-dev-tables": "export NODE_ENV=development && node server/migrate-tables",
+    "migrate-test-tables": "export NODE_ENV=test && node server/migrate-tables"
+  },
+  "dependencies": {
+    "compression": "1.7.0",
+    "cors": "2.8.1",
+    "helmet": "3.11.0",
+    "lodash": "4.17.10",
+    "loopback": "3.19.2",
+    "loopback-boot": "2.27.1",
+    "loopback-component-explorer": "5.2.0",
+    "loopback-connector-postgresql": "3.3.1",
+    "path": "0.12.7",
+    "strong-error-handler": "2.3.2"
+  },
+  "devDependencies": {
+    "chai": "4.1.2",
+    "chai-http": "^4.0.0",
+    "eslint": "^3.17.1",
+    "eslint-config-loopback": "^8.0.0",
+    "mocha": "^5.1.1"
+  },
+  "repository": {
+    "type": "",
+    "url": ""
+  },
+  "license": "Apache-2.0",
+  "description": "Module-Curtaion-API",
+  "nyc": {
+    "exclude": [
+      "test",
+      "server/server.js",
+      "server/migrate-tables.js"
+    ]
+  }
+}

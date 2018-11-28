@@ -1,0 +1,7 @@
+---
+applications:
+- name: module-curation-staging
+  memory: 256M
+  instances: 1
+services:
+ - module-curation-psql-staging

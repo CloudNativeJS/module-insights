@@ -1,0 +1,78 @@
+/***************************************************************************
+ *
+ * (C) Copyright IBM Corp. 2018
+ *
+ *  This program and the accompanying materials are made available
+ *  under the terms of the Apache License v2.0 which accompanies
+ *  this distribution.
+ *
+ *      The Apache License v2.0 is available at
+ *      http://www.opensource.org/licenses/apache2.0.php
+ *
+ * Contributors:
+ *   Multiple authors (IBM Corp.) - initial implementation and documentation
+ ***************************************************************************/
+
+.tag-support-ibm {
+    display: inline-block;
+    padding: .2rem;
+    background-color: #466BB0;
+    color: white;
+    text-align: center;
+}
+
+.tag-support-lunchbadger {
+    display: inline-block;
+    padding: .2rem;
+    background-color: #68daf4;
+    color: #007e9c;
+    text-align: center;
+}
+
+@media only screen and (min-width: 910px) {
+    div.dynamic {
+        position: absolute;
+        left: 40%;
+        z-index: 1;
+    }
+}
+
+.footer {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+}
+
+.z-2 {
+    z-index: -2
+}
+
+.notextdecoration {
+    text-decoration: none;
+}
+
+#ibm-leadspace-head {
+    background-color: #2c7780;
+    color: #dddbdc;
+}
+
+.link-primary {
+  border: none;
+  background-color: #2c7780;
+  border-color: #dddbdc;
+  color: white;
+  font-weight: bold;
+}
+
+.ibm-textcolor-default {
+  color: #ffffff;
+}
+
+.color-primary {
+  background-color: #2c7780;
+}
+
+.color-secondary {
+  background-color: #103236;
+}
