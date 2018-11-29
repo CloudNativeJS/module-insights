@@ -18,13 +18,13 @@
     "migrate-test-tables": "export NODE_ENV=test && node server/migrate-tables"
   },
   "dependencies": {
-    "compression": "1.7.0",
+    "compression": "^1.7.3",
     "cors": "2.8.1",
     "helmet": "3.11.0",
     "lodash": "4.17.10",
     "loopback": "3.19.2",
     "loopback-boot": "2.27.1",
-    "loopback-component-explorer": "5.2.0",
+    "loopback-component-explorer": "6.3.1",
     "loopback-connector-postgresql": "3.3.1",
     "path": "0.12.7",
     "strong-error-handler": "2.3.2"
