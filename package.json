@@ -37,8 +37,8 @@
     "mocha": "^5.1.1"
   },
   "repository": {
-    "type": "",
-    "url": ""
+    "type": "git",
+    "url": "https://github.com/CloudNativeJS/module-insights"
   },
   "license": "Apache-2.0",
   "description": "Module-Curtaion-API",
