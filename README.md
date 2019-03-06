@@ -1,6 +1,6 @@
 # *Module Insights*
 
-[![Build Status](https://travis-ci.org/CloudNativeJS/module-insights.svg?branch=master)](https://travis-ci.org/CloudNativeJS/module-insights)
+[![Build Status](https://travis-ci.org/CloudNativeJS/module-insights.svg?branch=master)](https://travis-ci.org/CloudNativeJS/module-insights) [![Greenkeeper badge](https://badges.greenkeeper.io/CloudNativeJS/module-insights.svg)](https://greenkeeper.io/)
 
 Trying to run this locally? See [CONTRIBUTING.md](./CONTRIBUTING.md).
 
